@@ -23,6 +23,7 @@ coverage
 #Secrets
 config
 secrets.js
+WebApp/config/secrets.js
 
 #api
 api.js
