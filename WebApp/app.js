@@ -29,6 +29,7 @@ var homeController = require('./controllers/home');
 var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
+var fundsController = require('./controllers/paypal_payout');
 
 /**
  * API keys and Passport configuration.
@@ -150,6 +151,9 @@ app.get('/api/bitgo', apiController.getBitGo);
 app.post('/api/bitgo', apiController.postBitGo);
 app.get('/api/bitcore', apiController.getBitcore);
 app.post('/api/bitcore', apiController.postBitcore);
+
+/*Moonshot code*/
+app.get('/paypal_payout', fundsController.getFunds);
 
 /**
  * OAuth authentication routes. (Sign in)
