@@ -54,3 +54,34 @@ paypal.payout.create(create_payout_json, sync_mode, function (error, payout) {
         console.log(payout);
     }
 });
+
+exports.postFunds = function(req, res, next) {
+  var fundRequest = {
+        "sender_batch_header": {
+        "sender_batch_id": sender_batch_id,
+        "email_subject": "You've got Funds"
+    },
+   "items": [
+        {
+            "recipient_type": "EMAIL",
+            "amount": {
+                "value": req.body.fundsrequest,
+                "currency": "USD"
+            },
+            "receiver": "moonshottest@gmail.com",
+            "note": "Thank you.",
+            "sender_item_id": "item_3"
+        }
+    ]
+
+  };
+  paypal.payout.create(fundRequest, sync_mode, function (error, payout) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+        console.log("Create Single Payout Response");
+        console.log(payout);
+    }
+});
+};

@@ -154,7 +154,7 @@ app.post('/api/bitcore', apiController.postBitcore);
 
 /*Moonshot code*/
 app.get('/paypal_payout', fundsController.getFunds);
-
+app.post('/paypal_payout', fundsController.postFunds);
 /**
  * OAuth authentication routes. (Sign in)
  */
