@@ -577,16 +577,16 @@ exports.getInstagram = function(req, res, next) {
   ig.use({ client_id: secrets.instagram.clientID, client_secret: secrets.instagram.clientSecret });
   ig.use({ access_token: token.accessToken });
   async.parallel({
-    searchByUsername: function(done) {
-      ig.user_search('richellemead', function(err, users, limit) {
-        done(err, users);
-      });
-    },
-    searchByUserId: function(done) {
-      ig.user('175948269', function(err, user) {
-        done(err, user);
-      });
-    },
+  //  searchByUsername: function(done) {
+  //    ig.user_search('richellemead', function(err, users, limit) {
+  //      done(err, users);
+  //    });
+  //  },
+  //  searchByUserId: function(done) {
+  //    ig.user('175948269', function(err, user) {
+  //      done(err, user);
+  //    });
+  //  },
     popularImages: function(done) {
       ig.media_popular(function(err, medias) {
         done(err, medias);
@@ -601,8 +601,8 @@ exports.getInstagram = function(req, res, next) {
     if (err) return next(err);
     res.render('api/instagram', {
       title: 'Instagram API',
-      usernames: results.searchByUsername,
-      userById: results.searchByUserId,
+     // usernames: results.searchByUsername,
+     // userById: results.searchByUserId,
       popularImages: results.popularImages,
       myRecentMedia: results.myRecentMedia
     });
