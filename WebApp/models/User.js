@@ -20,7 +20,8 @@ var userSchema = new mongoose.Schema({
     location: { type: String, default: '' },
     website: { type: String, default: '' },
     picture: { type: String, default: '' },
-    group: { type: String, default: '' }
+    group: { type: String, default: '' },
+    paypal: { type: String, default:''}
   },
 
   resetPasswordToken: String,
