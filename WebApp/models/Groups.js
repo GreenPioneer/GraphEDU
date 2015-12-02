@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 
 var groupSchema = new mongoose.Schema({
   //amount of funds left, maximum bank, members, check if they are members
+  groupname: String,
   funds_remaining: Number,
   funds_max: Number,
   members: Array,
