@@ -30,7 +30,7 @@ var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var contactController = require('./controllers/contact');
 var fundsController = require('./controllers/paypal_payout');
-
+var groupController = require('./controllers/groups');
 /**
  * API keys and Passport configuration.
  */
@@ -155,6 +155,9 @@ app.post('/api/bitcore', apiController.postBitcore);
 /*Moonshot code*/
 app.get('/paypal_payout', fundsController.getFunds);
 app.post('/paypal_payout', fundsController.postFunds);
+app.get('/account/group', groupController.getGroup);
+app.post('/account/group', groupController.postNewGroup);
+
 /**
  * OAuth authentication routes. (Sign in)
  */

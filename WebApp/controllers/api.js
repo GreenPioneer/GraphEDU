@@ -438,7 +438,7 @@ exports.postTwilio = function(req, res, next) {
   }
   var message = {
     to: req.body.number,
-    from: '+13472235148',
+    from: '+15005550006',
     body: req.body.message
   };
   twilio.sendMessage(message, function(err, responseData) {
@@ -467,8 +467,8 @@ exports.getClockwork = function(req, res) {
 exports.postClockwork = function(req, res, next) {
   var message = {
     To: req.body.telephone,
-    From: 'Hackathon',
-    Content: 'Hello from the Hackathon Starter'
+    From: 'MoonshotEdu',
+    Content: 'Hello from the Moonshot Funding'
   };
   clockwork.sendSms(message, function(err, responseData) {
     if (err) return next(err.errDesc);
