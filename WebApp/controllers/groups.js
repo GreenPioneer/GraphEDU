@@ -38,14 +38,15 @@ exports.postNewGroup = function(req, res, next) {
 
   Group.findOne({ groupname: req.body.groupname }, function(err, existingGroup) {
     if (existingGroup) {
-      req.flash('errors', { msg: 'Group with that name already exists.' });
+      req.flash('info', { msg: 'Group with that name already exists.' });
       return res.redirect('group');
     }
     group.save(function(err) {
       if (err) return next(err);
    //   req.logIn(user, function(err) {
    //     if (err) return next(err);
-        res.redirect('/account');
+        req.flash('info', {msg: 'Welcome to the Group.'});
+         res.redirect('/account');
     //  });
     });
   });
