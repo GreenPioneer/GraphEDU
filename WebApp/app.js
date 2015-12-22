@@ -155,8 +155,11 @@ app.post('/api/bitcore', apiController.postBitcore);
 /*Moonshot code*/
 app.get('/paypal_payout', fundsController.getFunds);
 app.post('/paypal_payout', fundsController.postFunds);
-app.get('/account/group', groupController.getGroup);
+app.get('/account/group', passportConf.isAuthenticated, groupController.getGroup);
 app.post('/account/group', groupController.postNewGroup);
+app.post('/account/invitegroup', groupController.postInvite);
+app.post('/account/joingroup', groupController.postJoinGroup);
+app.post('/account/leavegroup', groupController.postLeaveGroup);
 
 /**
  * OAuth authentication routes. (Sign in)

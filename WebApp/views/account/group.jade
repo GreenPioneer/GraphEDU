@@ -14,3 +14,46 @@ block content
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus
           | New Group
+
+
+  .page-header
+    h3 Leave Group
+
+  form.form-horizontal(action='/account/leavegroup', method='POST')
+    .form-group
+      p.col-sm-offset-3.col-sm-4 You can leave your group, but it may be hard to find a new one.
+      input(type='hidden', name='_csrf', value=_csrf)
+      .col-sm-offset-3.col-sm-4
+        button.btn.btn-danger(type='submit')
+          i.fa.fa-trash
+          | Leave my group
+
+
+  .page-header
+    h3 Join Group
+
+  form.form-horizontal(action='/account/joingroup', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='groupjoin') Join a Group
+      .col-sm-7
+        input.form-control(type='text', name='groupjoin', id='groupjoin', placeholder='Type new group name here', autofocus)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Join Group
+
+  .page-header
+    h3 Invite users to your group
+  form.form-horizontal(action='/account/invitegroup', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='groupinvite') Group Invite
+      .col-sm-7
+        input.form-control(type='text', name='groupinvite', id='groupinvite', placeholder='Type emails here to invite groupmembers', autofocus)
+    .form-group
+      .col-sm-offset-3.col-sm-7
+        button.btn.btn-success(type='submit')
+          i.fa.fa-user-plus
+          | Group Invite
