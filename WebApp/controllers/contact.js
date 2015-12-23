@@ -1,10 +1,18 @@
 var secrets = require('../config/secrets');
 var nodemailer = require("nodemailer");
+//var transporter = nodemailer.createTransport({
+//  service: 'SendGrid',
+//  auth: {
+//    user: secrets.sendgrid.user,
+//    pass: secrets.sendgrid.password
+//  }
+//});
+
 var transporter = nodemailer.createTransport({
-  service: 'SendGrid',
+  service: 'Gmail',
   auth: {
-    user: secrets.sendgrid.user,
-    pass: secrets.sendgrid.password
+      user: 'thomasqjohns1@gmail.com',
+      pass: '!TJ527041tj'
   }
 });
 

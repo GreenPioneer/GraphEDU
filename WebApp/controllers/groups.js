@@ -10,10 +10,11 @@ var secrets = require('../config/secrets');
 var transporter = nodemailer.createTransport({
   service: 'Gmail',
   auth: {
-    user: 'thomasqjohns1',
-    pass: '!TJ527041tj'
+      user: 'thomasqjohns1@gmail.com',
+      pass: '!TJ527041tj'
   }
 });
+
 
 /**
  * GET /group
@@ -65,8 +66,9 @@ exports.postNewGroup = function(req, res, next) {
  * User leaves a group. Groupid should reference the objectid of the user group. Like req.user.group
  */
 exports.postLeaveGroup = function(req, res, next) {
-  Group.findById(GroupId, function (err, group) {
-  group.members.remove({ _id: req.user.id }, function(err) {
+  //console.log(req.user.profile.group);
+  Group.findById(req.user.profile.group, function (err, group) {
+  group.members.pull({ members: req.user.id }, function(err) {
     if (err) return next(err);
     
     req.flash('info', { msg: 'You are now alone.' });
@@ -87,7 +89,7 @@ exports.postLeaveGroup = function(req, res, next) {
  * Invite users to a group 
  */
 exports.postInvite = function (req, res, next) {
-  req.assert('email', 'Email is not valid').isEmail();
+  req.assert('groupinvite', 'Email is not valid').isEmail();
 
   var errors = req.validationErrors();
 
@@ -96,10 +98,10 @@ exports.postInvite = function (req, res, next) {
     return res.redirect('/account/group');
   }
 
-  var from = req.user.email;
-  var name = req.body.name;
-  var body = req.body.message;
-  var to = 'thomasqjohns1@gmail.com';
+  var from = 'Moonshot Hq';
+  var name = 'Moonshot Projects';
+  var body = 'Join our Group';
+  var to = req.body.groupinvite;
   var subject = 'You are invited to our group | GraphEdu';
 
   var mailOptions = {
@@ -129,6 +131,7 @@ exports.postInvite = function (req, res, next) {
 exports.postJoinGroup = function(req, res, next) {
    Group.findOne({ groupname: req.body.groupjoin }, function(err, existingGroup) {
     if (existingGroup) {
+     
     existingGroup.members.push({ members: req.user.id }, function(err) {
     if (err) return next(err);
       });
