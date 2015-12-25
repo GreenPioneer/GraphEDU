@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
 var Group = require('../models/Groups');
+var User = require('../models/User');
 var secrets = require('../config/secrets');
 
 var transporter = nodemailer.createTransport({
@@ -66,16 +67,20 @@ exports.postNewGroup = function(req, res, next) {
  * User leaves a group. Groupid should reference the objectid of the user group. Like req.user.group
  */
 exports.postLeaveGroup = function(req, res, next) {
-  //console.log(req.user.profile.group);
-  Group.findById(req.user.profile.group, function (err, group) {
-  group.members.pull({ members: req.user.id }, function(err) {
+  console.log(req.user.profile.group);
+  Group.findOne({groupname: req.user.profile.group }, function (err, group) {
+  console.log(group);
+  console.log(req.user.profile.group);
+  group.members.pull({members: req.user.id} , function(err) {
     if (err) return next(err);
-    
-    req.flash('info', { msg: 'You are now alone.' });
-    res.redirect('/group');
+   }); 
+     group.save(function(err) {
+       if (err) return next(err);
+          req.flash('info', {msg: 'You are alone now'});
+          res.redirect('/account/group');
+   });
   });
- });
-};
+ };
 
 /**
  * POST /account/mediate
@@ -138,8 +143,18 @@ exports.postJoinGroup = function(req, res, next) {
     
       existingGroup.save(function(err) {
       if (err) return next(err);
-          res.redirect('/account/group');
-          req.flash('info', {msg: 'Welcome to the Group.'});
+          //res.redirect('/account/group');
+          //req.flash('info', {msg: 'Welcome to the Group.'});
+
+    User.findById(req.user.id, function(err, user) {
+     if (err) return next(err);
+     user.profile.group = req.body.groupjoin; 
+       user.save(function(err) {
+       if (err) return next(err);
+       req.flash('success', { msg: 'Welcome to Group' });
+       res.redirect('/account/group');
+    }); 
+     });
     });
     } else { 
     req.flash('errors', { msg: 'Yo that is not a group yet. Make one real quick' });
@@ -163,15 +178,24 @@ exports.getGroupList = function(req, res, next) {
 
 
 //test
-
-   Group.findOne({ groupname: 'testbaby' }, function(err, existingGroup) {
+/**
+ //  Group.findOne({ groupname: 'testbaby' }, function(err, existingGroup) {
      console.log(existingGroup);
 
-    existingGroup.members.push({ members: 'test' }, function(err) {
+    existingGroup.members.push({ members: req.user.id }, function(err) {
     if (err) return next(err);
     console.log(existingGroup);
-    console.log(_id);
+    console.log('modifed');
+      });
+   console.log(existingGroup);
+
+
+    existingGroup.members.pull({ members: req.user.id }, function(err) {
+    if (err) return next(err);
+    console.log(existingGroup);
+    console.log('modifed');
       });
    console.log(existingGroup); 
 
 });
+*/

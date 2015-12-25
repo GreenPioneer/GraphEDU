@@ -57,3 +57,20 @@ block content
         button.btn.btn-success(type='submit')
           i.fa.fa-user-plus
           | Group Invite
+
+  .page-header
+    h3 My Group
+  form.form-horizontal(id='newgroup-form', method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .form-group
+      label.col-sm-3.control-label(for='groupname') Group Name
+      .col-sm-7
+        p: '#{user.profile.group}'
+    h3 Current Fund Request 
+  .form-horizontal
+    .form-group
+      .col-sm-offset-3.col-sm-4
+        if user.instagram
+          p: a.text-danger(href='/account/unlink/instagram') Unlink your Instagram account
+        else
+          p: a(href='/auth/instagram') Link your Instagram account
