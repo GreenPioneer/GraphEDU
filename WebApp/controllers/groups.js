@@ -19,14 +19,23 @@ var transporter = nodemailer.createTransport({
 
 /**
  * GET /group
- * Group page.
+ * Group page. Get the group the user is in, recent fund request,group members. 
  */
 exports.getGroup = function(req, res) {
-  res.render('account/group', {
-    title: 'Group'
-  });
+   Group.findOne({ groupname: req.user.profile.group }, function(err, existingGroup){
+     if (existingGroup) {
+      res.render('account/group', {
+        title: 'Group',
+        myGroup: existingGroup
+       }); 
+     } else {
+	res.render('account/group', {
+        title: 'Group'
+     
+    });
+  };
+});
 };
-
 
 /**
  * POST /NewGroup
@@ -57,6 +66,7 @@ exports.postNewGroup = function(req, res, next) {
         req.flash('info', {msg: 'Welcome to the Group.'});
          res.redirect('/account');
     //  });
+       
     });
   });
 };
@@ -136,7 +146,9 @@ exports.postInvite = function (req, res, next) {
 exports.postJoinGroup = function(req, res, next) {
    Group.findOne({ groupname: req.body.groupjoin }, function(err, existingGroup) {
     if (existingGroup) {
-     
+     if (req.user.profile.group) {
+       req.flash('errors', { msg: 'You are already in a group' });
+       res.redirect('/account/group'); } else { 
     existingGroup.members.push({ members: req.user.id }, function(err) {
     if (err) return next(err);
       });
@@ -153,9 +165,10 @@ exports.postJoinGroup = function(req, res, next) {
        if (err) return next(err);
        req.flash('success', { msg: 'Welcome to Group' });
        res.redirect('/account/group');
-    }); 
+         }); 
+       });
      });
-    });
+    };
     } else { 
     req.flash('errors', { msg: 'Yo that is not a group yet. Make one real quick' });
     res.redirect('/account/group');

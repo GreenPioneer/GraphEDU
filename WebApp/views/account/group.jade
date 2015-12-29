@@ -37,7 +37,7 @@ block content
     .form-group
       label.col-sm-3.control-label(for='groupjoin') Join a Group
       .col-sm-7
-        input.form-control(type='text', name='groupjoin', id='groupjoin', placeholder='Type new group name here', autofocus)
+        input.form-control(type='text', name='groupjoin', id='groupjoin', placeholder='Type the name of the group you want to join', autofocus)
     .form-group
       .col-sm-offset-3.col-sm-7
         button.btn.btn-success(type='submit')
@@ -66,6 +66,12 @@ block content
       label.col-sm-3.control-label(for='groupname') Group Name
       .col-sm-7
         p: '#{user.profile.group}'
+      label.col-sm-3.control-label(for='groupname') Group Name
+      .col-sm-7
+        p: '#{myGroup}'
+      label.col-sm-3.control-label(for='groupMembers') Group Members
+      .col-sm-7
+        p: '#{myGroup.groupname}'
     h3 Current Fund Request 
   .form-horizontal
     .form-group
@@ -74,3 +80,7 @@ block content
           p: a.text-danger(href='/account/unlink/instagram') Unlink your Instagram account
         else
           p: a(href='/auth/instagram') Link your Instagram account
+
+ul
+  each site in mysites
+    li= site.url
