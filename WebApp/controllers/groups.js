@@ -26,12 +26,13 @@ exports.getGroup = function(req, res) {
      if (existingGroup) {
       res.render('account/group', {
         title: 'Group',
-        myGroup: existingGroup
+        myGroup: existingGroup,
+        test: JSON.stringify(existingGroup)
        }); 
      } else {
 	res.render('account/group', {
         title: 'Group'
-     
+        
     });
   };
 });

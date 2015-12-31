@@ -66,12 +66,15 @@ block content
       label.col-sm-3.control-label(for='groupname') Group Name
       .col-sm-7
         p: '#{user.profile.group}'
-      label.col-sm-3.control-label(for='groupname') Group Name
+      label.col-sm-3.control-label(for='groupname') Group Database
       .col-sm-7
-        p: '#{myGroup}'
+        p: #{myGroup}
       label.col-sm-3.control-label(for='groupMembers') Group Members
       .col-sm-7
-        p: '#{myGroup.groupname}'
+        p #{myGroup.groupname}
+        ul
+          each members in myGroup 
+            li #{myGroup.members[0]}
     h3 Current Fund Request 
   .form-horizontal
     .form-group
